@@ -1,0 +1,4 @@
+;AdminListÉèÖÃµÄÖµ£º*:Admin 1:sysop 2:observer
+* aaaaa
+* bbbbb
+* ccccc

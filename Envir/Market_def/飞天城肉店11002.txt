@@ -1,0 +1,42 @@
+; ===================================
+; Market Def NPC File : 1Bme-0
+; Butcher in BichonPrivince
+; -----------------------------------
+; Name: Sarah
+; Job: Butcher
+; Map No: 0
+; Pos X 313
+; Pos Y 271
+; File name: *removed*
+; Comment: Butcher in BichonProvince
+
+;================================================= =
+;
+
+;Settings
+%100
++40
++1
+
+;Pkr Tag (NPC won't talk to Pkrs)
+[@main]
+#IF
+checkpkpoint 2
+#SAY
+我绝不会帮助你这样邪恶的人... \ \
+<确定/@exit>
+#ELSEACT
+goto @main-1
+
+[@main-1]
+你要把哪些肉卖给我?\ \
+<卖肉/@sell>\
+<关闭/@exit>
+
+[@sell]
+高品质的肉在这里可以卖一个好价钱.\
+但是,掉在地上粘了泥土或者被火焚烧过的肉,就不值钱了..\ \
+<返回/@main>
+
+[goods]
+;物品	数量	库存数量	刷新时间(小时)

@@ -1,0 +1,39 @@
+; ===================================
+; Market Def NPC File : 6Bwh-0
+; BichonProvince
+; -----------------------------------
+; Name: Brittany
+; Job: 
+; Map No: 0
+; Pos X 301
+; Pos Y 257
+; File name: *removed*
+; Comment: BichonProvince
+
+;================================================= =
+;
+; Brief Description of the switches used in this NPC.
+; [306] - Unknown
+;
+
+;Settings
+%100
+
+;Pkr Tag (NPC won't talk to Pkrs)
+[@main]
+#IF
+checkpkpoint 2
+#SAY
+我绝不会帮助你这样邪恶的人..\ \
+<确定/@exit>
+#ELSEACT
+goto @main-1
+
+[@main-1]
+有什么可以帮您的吗?\
+<使用仓库/@storage>\
+<关闭/@exit>
+
+[@storage]
+<返回/@main>
+

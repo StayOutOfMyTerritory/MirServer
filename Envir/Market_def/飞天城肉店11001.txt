@@ -1,0 +1,55 @@
+;Settings
+;物价
+%100
+;物品种类
++40
++1
+
+[@main]
+欢迎光临,我能为你做点什么?\ 
+<卖肉/@sell>\
+<买肉/@buy>\
+<出去/@Tmove>\
+<关闭/@exit>
+
+[@sell]
+如果你有高品质的肉请把它卖给我\
+我会给你个好价钱\
+\
+<买肉/@buy>\
+<返回/@main>
+
+[@buy]
+请选择你需要购买的物品.\
+\
+<返回/@main>
+
+[@Tmove]
+#IF
+random 4
+#ACT
+mapmove 0 345 310
+break
+#IF
+random 4
+#ACT
+mapmove 0 344 309
+break
+#IF
+random 4
+#ACT
+mapmove 0 334 300
+break
+#IF
+random 4
+#ACT
+mapmove 0 334 301
+break
+#ELSEACT
+goto @Tmove
+
+;商人出售商品目录
+[goods]
+;物品	数量	库存数量	刷新时间(小时)
+肉块	1	1000            1
+鸡肉	1	1000            1 

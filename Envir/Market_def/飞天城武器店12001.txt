@@ -1,0 +1,215 @@
+; ===================================
+; Market Def NPC File : 2Bwe-0103
+; Blacksmith in BichonProvince (WeaponShop)
+; -----------------------------------
+; Name: Vincent
+; Job: Blacksmith
+; Map No: 0
+; Pos X 19
+; Pos Y 18
+; File name: *removed*
+; Comment: Blacksmith in BichonProvince (WeaponShop)
+
+;================================================= =
+;
+; Brief Description of the switches used in this NPC.
+;开始指示时[203]
+;执行指示过程中收到彩票就结束时 [204]
+;执行指示过程中失败或完成时[205]
+;惹恼卫家店时 [210]
+;惹恼戒指店老板时[211]
+;没有能够调解被惹恼的卫家店心情的金矿时[212]
+;调解好被惹恼的卫家店的心情时[213]
+;听到去找铁匠铺老板的话时[214]
+;给卫家店赊账时[215]
+;铁匠铺老板请求给高级武士传话时[216]
+;给高级武士说错话时[217]
+;承诺打败魔鬼时[218]
+;听到有关指示的暗示时 [219]
+;打败了魔鬼时 [220]
+;打败魔鬼，拿到命运之书时 [221]
+;去送命运之书，叫以后再来找时[222]
+;
+
+;Settings
+%100
++5
++6
++43
+
+;Pkr Tag (NPC won't talk to Pkrs)
+[@main]
+#IF
+checkpkpoint 2
+#SAY
+对不起,我不会跟邪恶的人讲话..\ \
+<确定/@exit>
+#ELSEACT
+goto @main-1
+
+[@main-1]
+欢迎光临我的店铺,有什么我能帮助的?\
+<购买/@buy>武器\
+<出售/@sell>武器\
+<修理/@repair>武器\
+<了解/@qweapon>关于武器\
+<交谈/@talk>与文森特\
+<出去/@Tmove>\
+<关闭/@exit>
+
+[@Tmove]
+#IF
+random 4
+#ACT
+mapmove 0 345 310
+break
+#IF
+random 4
+#ACT
+mapmove 0 344 309
+break
+#IF
+random 4
+#ACT
+mapmove 0 334 300
+break
+#IF
+random 4
+#ACT
+mapmove 0 334 301
+break
+#ELSEACT
+goto @Tmove
+
+[@buy]
+请选择你要购买的武器.\ \
+<返回/@main-1>
+
+[@sell]
+请把你要出售的武器放在这里.\ \
+<返回/@main-1>
+
+[@repair]
+你想修理哪一件武器?\ \
+ <返回/@main-1>
+
+[~@repair]
+你的武器似乎已经完美的修复了.\ \
+<返回/@main-1>
+
+[@qweapon]
+从商店里购买的武器一般都是规格统一的,\
+但是从怪物身上掉落的武器有可能是独一无二.\
+如果你把那些特别的武器卖给我们,我会给你更高的价格.\
+还有一件事顺便提一下,不要忘了.\
+出售武器的价格跟所剩的持久也有关系,持久越多价格越高.\ \
+<返回/@main-1>
+
+[goods]
+;物品	数量	库存数量	刷新时间(小时)
+木剑	1	100         	1
+青铜剑	1	100	1 
+铁剑	1	100	1
+短剑	1 	100	1
+钢铁斧	1	100	1
+鹤嘴锄	1	100           1
+
+;Quest Section of NPC
+
+[@talk]
+#IF
+check [205] 1
+#ACT
+goto @end
+break
+#IF
+check [203] 1
+#ACT
+goto @end
+break
+#IF
+check [202] 1
+#ACT
+goto @kang
+break
+#IF
+check [201] 1
+#ACT
+goto @talkwith
+break
+#ELSEACT
+goto @needgold
+break
+
+[@end]
+真是美好的一天...\ \
+<没错/@exit>
+
+[@needgold]
+#IF
+checkitem 金矿 1
+#SAY
+在你包裹里有一个闪闪发光的东西那是什么?\
+是一块金矿吗?谈到金矿,\
+你听说过命运之刃吗?\
+如果你能给我纯度更高的金矿,\
+我就会告诉你关于那把武器更多的秘密.\ \
+<好的/@main-1>
+#ACT
+reset [201] 50
+set [201] 1
+#ELSESAY
+快去找到我需要的金矿...\ 
+<确定/@exit>
+
+[@talkwith]
+#IF
+checkitem 金矿 3
+checkdura 金矿 15
+#SAY
+啊,我看见了你的金矿,那正是我需要的.\
+不错不错,赶快给我吧.\
+不过我今天没有钱向你购买他们.\
+你可以把它免费送给我吗?\ \
+<好的/@freegive>免费送给你.\
+<不行/@nogive>我也需要它.\
+#ELSESAY
+我需要三块金矿...其中必须有一块纯度15以上的才行. \ \ 
+<确定/@exit>
+
+[@freegive]
+#IF
+checkitem 金矿 3
+checkdura 金矿 13
+#ACT
+take 金矿 2
+takecheckitem
+set [202] 1
+#SAY
+你可真大方,谢谢你!\
+看在金矿的份上我会把我的朋友比尔介绍给你认识.\
+他知道关于命运之刃所有的事情.\
+而且他也是唯一知道这事的人.\
+不过他可能有些事情需要你帮忙.\
+所以你必须要先帮助他.\ \
+<继续/@kang>
+
+[@nogive]
+你确定你不舍得那些漂亮的金矿?\
+很多人都想得到命运之刃.\
+而且我和比尔都非常需要你身上的金矿.\
+你好好想像吧!\ \
+<免费赠送/@freegive>\
+<不能免费/@r_nogive>
+
+[@r_nogive]
+我都这么说了你也不给我. \
+哼,自己好好去想想吧! \ \
+<确定/@exit>
+
+[@kang]
+我现在要好好研究这些金矿了.\
+如果想了解关于命运之刃跟多的消息就去找比尔谈谈吧.\ \
+<确定/@exit>
+#ACT
+set [203] 1
